@@ -1,6 +1,6 @@
 import Counter from "../components/Counter";
 
-type User = {
+export type User = {
   id: number;
   name: string;
   username: string;
