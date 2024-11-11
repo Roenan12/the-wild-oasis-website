@@ -1,3 +1,5 @@
+import Counter from "../components/Counter";
+
 type User = {
   id: number;
   name: string;
@@ -22,6 +24,7 @@ type User = {
   };
 };
 
+// server component / RSC
 export default async function Page(): Promise<JSX.Element> {
   const res = await fetch("https://jsonplaceholder.typicode.com/users");
   const data = await res.json();
@@ -35,6 +38,7 @@ export default async function Page(): Promise<JSX.Element> {
           <li key={user.id}>{user.name} </li>
         ))}
       </ul>
+      <Counter users={data} />
     </div>
   );
 }
