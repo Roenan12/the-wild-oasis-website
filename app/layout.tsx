@@ -2,6 +2,15 @@ import type { Metadata } from "next";
 import Logo from "@/app/_components/Logo";
 import Navigation from "@/app/_components/Navigation";
 
+import { Josefin_Sans } from "next/font/google";
+
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
+
+console.log(josefin);
+
 import "@/app/_styles/globals.css";
 
 export const metadata: Metadata = {
@@ -20,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-primary-950 text-primary-100 min-h-screen">
+    <html lang="en" className={josefin.className}>
+      <body className="bg-primary-950 text-primary-100 min-h-screen ">
         <header>
           <Logo /> <Navigation />
         </header>
