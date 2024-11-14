@@ -1,14 +1,14 @@
 import { eachDayOfInterval } from "date-fns";
 
 export type Cabin = {
-  id: string;
-  name?: string;
-  maxCapacity?: number;
-  regularPrice?: number;
+  id: number;
+  name: string;
+  maxCapacity: number;
+  regularPrice: number;
   discount?: number;
   image?: string;
-  startDate?: string;
-  endDate?: string;
+  startDate: string;
+  endDate: string;
 };
 
 export type Guest = {
@@ -17,20 +17,20 @@ export type Guest = {
 };
 
 export type Booking = {
-  id: string;
-  created_at?: string;
+  id: number;
+  created_at: string;
   startDate: string;
   endDate: string;
-  numNights?: number;
-  numGuests?: number;
-  totalPrice?: number;
+  numNights: number;
+  numGuests: number;
+  totalPrice: number;
   guestId: string;
   cabinId: string;
-  cabins?: {
+  cabins: {
     name: string;
     image: string;
   };
-  status?: string;
+  status: string;
 };
 
 type NewGuest = Omit<Guest, "id">;

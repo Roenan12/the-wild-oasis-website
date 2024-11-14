@@ -34,7 +34,7 @@ function CabinCard({ cabin }: CabinCardProps) {
             {(discount ?? 0) > 0 ? (
               <>
                 <span className="text-3xl font-[350]">
-                  ${(regularPrice ?? 0) - (discount ?? 0)}
+                  ${(regularPrice) - (discount ?? 0)}
                 </span>
                 <span className="line-through font-semibold text-primary-600">
                   ${regularPrice}
