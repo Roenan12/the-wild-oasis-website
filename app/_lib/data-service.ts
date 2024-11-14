@@ -1,6 +1,6 @@
 import { eachDayOfInterval } from "date-fns";
 
-type Cabin = {
+export type Cabin = {
   id: string;
   name?: string;
   maxCapacity?: number;
@@ -11,12 +11,12 @@ type Cabin = {
   endDate?: string;
 };
 
-type Guest = {
+export type Guest = {
   id: string;
   email: string;
 };
 
-type Booking = {
+export type Booking = {
   id: string;
   created_at?: string;
   startDate: string;
