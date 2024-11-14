@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import SelectCountry from "@/app/_components/SelectCountry";
 
 export const metadata: Metadata = {
-  title: "Account Profile",
+  title: "Update profile",
 };
 
 export default function Page() {
