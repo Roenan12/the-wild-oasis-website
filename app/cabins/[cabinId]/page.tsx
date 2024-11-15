@@ -2,9 +2,23 @@ import { Cabin, getCabin } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 
+// export const metadata = {
+//   title: "Cabin",
+// };
 type Params = {
   cabinId: string;
 };
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const cabin = await getCabin(params.cabinId);
+
+  if (!cabin) {
+    throw new Error("Cabin not found");
+  }
+
+  const { name } = cabin;
+  return { title: `Cabin ${name}` };
+}
 
 export default async function Page({ params }: { params: Params }) {
   const cabin: Cabin | null = await getCabin(params.cabinId);
@@ -13,6 +27,7 @@ export default async function Page({ params }: { params: Params }) {
     throw new Error("Failed to load cabin details");
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
 
