@@ -1,4 +1,5 @@
 import { eachDayOfInterval } from "date-fns";
+import { supabase } from "./supabase";
 
 export type Cabin = {
   id: number;
@@ -7,8 +8,6 @@ export type Cabin = {
   regularPrice: number;
   discount?: number;
   image?: string;
-  startDate: string;
-  endDate: string;
 };
 
 export type Guest = {
@@ -29,8 +28,14 @@ export type Booking = {
   cabins: {
     name: string;
     image: string;
-  };
-  status: string;
+  }[];
+};
+
+export type Settings = {
+  fullName: string;
+  email: string;
+  nationality: string;
+  nationalId: number;
 };
 
 type NewGuest = Omit<Guest, "id">;
@@ -80,17 +85,22 @@ export const getCabins = async function (): Promise<Cabin[]> {
   return data || [];
 };
 
-export async function getGuest(email: string): Promise<Guest | null> {
+export async function getGuest(email: string): Promise<Guest[]> {
   const { data, error } = await supabase
     .from("guests")
     .select("*")
     .eq("email", email)
     .single();
 
+  if (error) {
+    console.error(error);
+    throw new Error("Guest could not be loaded");
+  }
+
   return data;
 }
 
-export async function getBooking(id: string): Promise<Booking | null> {
+export async function getBooking(id: string): Promise<Booking[]> {
   const { data, error } = await supabase
     .from("bookings")
     .select("*")
@@ -125,7 +135,7 @@ export async function getBookings(guestId: string): Promise<Booking[]> {
 export async function getBookedDatesByCabinId(
   cabinId: string
 ): Promise<Date[]> {
-  let today = new Date();
+  const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const isoToday = today.toISOString();
 
@@ -152,7 +162,7 @@ export async function getBookedDatesByCabinId(
   return bookedDates;
 }
 
-export async function getSettings(): Promise<Record<string, any> | null> {
+export async function getSettings(): Promise<Settings[]> {
   const { data, error } = await supabase.from("settings").select("*").single();
 
   if (error) {
