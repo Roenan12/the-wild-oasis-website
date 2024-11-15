@@ -1,6 +1,7 @@
 import { UsersIcon } from "@heroicons/react/24/solid";
 import { Cabin } from "@/app/_lib/data-service";
 import Image from "next/image";
+import Link from "next/link";
 
 type CabinCardProps = {
   cabin: Cabin;
@@ -11,11 +12,16 @@ function CabinCard({ cabin }: CabinCardProps) {
 
   return (
     <div className="flex border-primary-800 border">
-      <Image
-        src={image ?? "/default-image.png"}
-        alt={`Cabin ${name}`}
-        className="flex-1 border-r border-primary-800"
-      />
+      <div className="flex-1 relative">
+        <Image
+          src={image ?? "./default-image.png"}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          quality={100}
+          alt={`Cabin ${name}`}
+          className="flex-1 border-r border-primary-800 object-cover"
+        />
+      </div>
 
       <div className="flex-grow">
         <div className="pt-5 pb-4 px-7 bg-primary-950">
@@ -34,7 +40,7 @@ function CabinCard({ cabin }: CabinCardProps) {
             {(discount ?? 0) > 0 ? (
               <>
                 <span className="text-3xl font-[350]">
-                  ${(regularPrice) - (discount ?? 0)}
+                  ${regularPrice - (discount ?? 0)}
                 </span>
                 <span className="line-through font-semibold text-primary-600">
                   ${regularPrice}
@@ -48,12 +54,12 @@ function CabinCard({ cabin }: CabinCardProps) {
         </div>
 
         <div className="bg-primary-950 border-t border-t-primary-800 text-right">
-          <a
+          <Link
             href={`/cabins/${id}`}
             className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
           >
             Details & reservation &rarr;
-          </a>
+          </Link>
         </div>
       </div>
     </div>
