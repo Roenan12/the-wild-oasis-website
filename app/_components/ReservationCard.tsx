@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
 import DeleteReservation from "@/app/_components/DeleteReservation";
@@ -22,10 +23,11 @@ function ReservationCard({ booking }: ReservationCardProps) {
     numNights,
     totalPrice,
     numGuests,
-    status,
     created_at,
-    cabins: { name, image },
+    cabins: [viewCabin],
   } = booking;
+
+  const { name, image } = viewCabin;
 
   return (
     <div className="flex border border-primary-800">
