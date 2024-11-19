@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Cabins",
 };
 
+export const revalidate = 3600; // invalidate the cache every hour
+// export const revalidate = 15; // invalidate every 15 secs
+
 export default function Page() {
   return (
     <div>
