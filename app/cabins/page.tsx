@@ -2,15 +2,24 @@ import type { Metadata } from "next";
 import CabinList from "@/app/_components/CabinList";
 import { Suspense } from "react";
 import Spinner from "@/app/_components/Spinner";
+import Filter from "@/app/_components/Filter";
 
 export const metadata: Metadata = {
   title: "Cabins",
 };
 
-export const revalidate = 3600; // invalidate the cache every hour
-// export const revalidate = 15; // invalidate every 15 secs
+// export const revalidate = 3600; // invalidate the cache every hour (this only works for static content)
 
-export default function Page() {
+type SearchParams = {
+  capacity: string;
+};
+
+export default function Page({ searchParams }: { searchParams: SearchParams }) {
+  console.log(searchParams);
+
+  const filter: string = searchParams?.capacity ?? "all";
+  console.log(filter);
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -25,8 +34,12 @@ export default function Page() {
         Welcome to paradise.
       </p>
 
-      <Suspense fallback={<Spinner />}>
-        <CabinList />
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+
+      <Suspense fallback={<Spinner />} key={filter}>
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );
