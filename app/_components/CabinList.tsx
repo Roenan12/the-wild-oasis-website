@@ -7,7 +7,7 @@ type CabinListProps = {
   filter?: string;
 };
 
-export default async function CabinList({ filter }: CabinListProps) {
+async function CabinList({ filter }: CabinListProps) {
   // noStore(); // opt out caching
   // in version 15 use "await connection()" instead
 
@@ -46,3 +46,5 @@ export default async function CabinList({ filter }: CabinListProps) {
     </div>
   );
 }
+
+export default CabinList;

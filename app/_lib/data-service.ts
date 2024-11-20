@@ -34,10 +34,10 @@ export type Booking = {
 };
 
 export type Settings = {
-  fullName: string;
-  email: string;
-  nationality: string;
-  nationalId: number;
+  minBookingLength: number;
+  maxBookingLength: number;
+  maxGuestsPerBooking: number;
+  breakfastPrice: number;
 };
 
 type NewGuest = Omit<Guest, "id">;
@@ -49,6 +49,9 @@ export async function getCabin(id: string): Promise<Cabin | null> {
     .select("*")
     .eq("id", id)
     .single();
+
+  //for testing, delay for 2secs
+  // await new Promise((res) => setTimeout(res, 2000));
 
   if (error) {
     console.error(error);
@@ -81,7 +84,7 @@ export const getCabins = async function (): Promise<Cabin[]> {
     .order("name");
 
   //for testing, delay for 2secs
-  //await new Promise((res) => setTimeout(res, 2000));
+  // await new Promise((res) => setTimeout(res, 2000));
 
   if (error) {
     console.error(error);
@@ -139,7 +142,7 @@ export async function getBookings(guestId: string): Promise<Booking[]> {
 }
 
 export async function getBookedDatesByCabinId(
-  cabinId: string
+  cabinId: number
 ): Promise<Date[]> {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
@@ -168,8 +171,12 @@ export async function getBookedDatesByCabinId(
   return bookedDates;
 }
 
-export async function getSettings(): Promise<Settings[]> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getSettings(id: number): Promise<Settings> {
   const { data, error } = await supabase.from("settings").select("*").single();
+
+  //for testing, delay for 2secs
+  // await new Promise((res) => setTimeout(res, 5000));
 
   if (error) {
     console.error(error);

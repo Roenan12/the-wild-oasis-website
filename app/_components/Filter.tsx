@@ -5,7 +5,7 @@ import React from "react";
 
 type Filter = string;
 
-export default function Filter() {
+function Filter() {
   const searchParams = useSearchParams();
   const router = useRouter(); // programatically route
   const pathname = usePathname();
@@ -71,3 +71,5 @@ function Button({ filter, handleFilter, activeFilter, children }: ButtonProps) {
     </button>
   );
 }
+
+export default Filter;

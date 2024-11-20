@@ -18,7 +18,7 @@ export default function Page({ searchParams }: { searchParams: SearchParams }) {
   console.log(searchParams);
 
   const filter: string = searchParams?.capacity ?? "all";
-  console.log(filter);
+  //console.log(filter);
 
   return (
     <div>

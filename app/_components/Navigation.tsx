@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Navigation() {
+function Navigation() {
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
@@ -32,3 +32,5 @@ export default function Navigation() {
     </nav>
   );
 }
+
+export default Navigation;
