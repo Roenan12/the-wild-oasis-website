@@ -4,6 +4,8 @@ import { isWithinInterval } from "date-fns";
 import { DayPicker, DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { Settings, Cabin } from "@/app/_lib/data-service";
+import { useReservation } from "@/app/_components/ReservationContext";
+
 // Utility function to check if a range is already booked
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function isAlreadyBooked(range: DateRange, datesArr: Date[]): boolean {
@@ -25,32 +27,32 @@ type DateSelectorProps = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
-  // CHANGE
+  const { range, setRange, resetRange } = useReservation();
 
   const regularPrice = 23;
   const discount = 23;
   const numNights = 23;
   const cabinPrice = 23;
-  const range = { from: null, to: null };
 
   // SETTINGS
 
   const { minBookingLength, maxBookingLength } = settings;
 
-  // initial function declaration
-  function resetRange(): void {
-    throw new Error("Function not implemented.");
-  }
-
-  // const minBookingLength = 1;
-  // const maxBookingLength = 23;
+  const handleSelect = (selected: DateRange | undefined) => {
+    setRange({
+      from: selected?.from || undefined,
+      to: selected?.to || undefined,
+    });
+  };
 
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
-        min={minBookingLength + 1}
+        onSelect={handleSelect}
+        selected={range}
+        min={minBookingLength}
         max={maxBookingLength}
         fromMonth={new Date()}
         fromDate={new Date()}
@@ -87,10 +89,10 @@ function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
-            onClick={() => resetRange()}
+            onClick={resetRange}
           >
             Clear
           </button>
