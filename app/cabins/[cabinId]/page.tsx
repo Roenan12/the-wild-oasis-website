@@ -8,7 +8,7 @@ import { Suspense } from "react";
 //   title: "Cabin",
 // };
 type Params = {
-  cabinId: string;
+  cabinId: number;
 };
 
 export async function generateMetadata({ params }: { params: Params }) {

@@ -13,7 +13,7 @@ export type Cabin = {
 };
 
 export type Guest = {
-  id: string;
+  id: number;
   email: string;
 };
 
@@ -43,7 +43,7 @@ export type Settings = {
 type NewGuest = Omit<Guest, "id">;
 type NewBooking = Omit<Booking, "id">;
 
-export async function getCabin(id: string): Promise<Cabin | null> {
+export async function getCabin(id: number): Promise<Cabin | null> {
   const { data, error } = await supabase
     .from("cabins")
     .select("*")
@@ -109,7 +109,7 @@ export async function getGuest(email: string): Promise<Guest[]> {
   return data;
 }
 
-export async function getBooking(id: string): Promise<Booking[]> {
+export async function getBooking(id: number): Promise<Booking[]> {
   const { data, error } = await supabase
     .from("bookings")
     .select("*")
@@ -124,7 +124,7 @@ export async function getBooking(id: string): Promise<Booking[]> {
   return data;
 }
 
-export async function getBookings(guestId: string): Promise<Booking[]> {
+export async function getBookings(guestId: number): Promise<Booking[]> {
   const { data, error } = await supabase
     .from("bookings")
     .select(
@@ -264,7 +264,7 @@ export async function updateBooking(
   return data;
 }
 
-export async function deleteBooking(id: string): Promise<Booking[]> {
+export async function deleteBooking(id: number): Promise<Booking[]> {
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {
