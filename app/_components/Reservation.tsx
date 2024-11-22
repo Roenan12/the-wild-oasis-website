@@ -1,6 +1,7 @@
-import React from "react";
 import DateSelector from "@/app/_components/DateSelector";
+import LoginMessage from "@/app/_components/LoginMessage";
 import ReservationForm from "@/app/_components/ReservationForm";
+import { auth } from "@/app/_lib/auth";
 import {
   Cabin,
   getBookedDatesByCabinId,
@@ -16,6 +17,13 @@ async function Reservation({ cabin }: ReservationProps) {
     getSettings(cabin.id),
     getBookedDatesByCabinId(cabin.id),
   ]);
+  const session = await auth();
+  const user = session?.user as {
+    name: string;
+    email: string;
+    image: string;
+  };
+
   return (
     <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]">
       <DateSelector
@@ -23,7 +31,11 @@ async function Reservation({ cabin }: ReservationProps) {
         bookedDates={bookedDates}
         cabin={cabin}
       />
-      <ReservationForm cabin={cabin} />
+      {session?.user ? (
+        <ReservationForm cabin={cabin} user={user} />
+      ) : (
+        <LoginMessage />
+      )}
     </div>
   );
 }

@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { auth } from "@/app/_lib/auth";
 
-function Navigation() {
+async function Navigation() {
+  const session = await auth();
+  console.log(session);
+
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
@@ -21,12 +25,28 @@ function Navigation() {
           </Link>
         </li>
         <li>
-          <Link
-            href="/account"
-            className="hover:text-accent-400 transition-colors"
-          >
-            Guest area
-          </Link>
+          {session?.user?.image ? (
+            <Link
+              href="/account"
+              className="hover:text-accent-400 transition-colors flex items-center gap-4"
+            >
+              {/*eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="h-8 rounded-full"
+                src={session.user.image}
+                alt={session.user.image}
+                referrerPolicy="no-referrer"
+              />
+              <span>Guest area</span>
+            </Link>
+          ) : (
+            <Link
+              href="/account"
+              className="hover:text-accent-400 transition-colors"
+            >
+              Guest area
+            </Link>
+          )}
         </li>
       </ul>
     </nav>
