@@ -2,10 +2,16 @@
 
 import { signIn, signOut } from "./auth";
 
-export async function signInAction() {
-  await signIn("google", { redirectTo: "/account" });
+interface AuthOptions {
+  redirectTo: string;
 }
 
-export async function signOutAction() {
-  await signOut({ redirectTo: "/" });
+export async function signInAction(): Promise<void> {
+  const options: AuthOptions = { redirectTo: "/account" };
+  await signIn("google", options);
+}
+
+export async function signOutAction(): Promise<void> {
+  const options: AuthOptions = { redirectTo: "/" };
+  await signOut(options);
 }
