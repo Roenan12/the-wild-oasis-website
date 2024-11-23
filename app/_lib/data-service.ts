@@ -94,7 +94,7 @@ export const getCabins = async function (): Promise<Cabin[]> {
   return data || [];
 };
 
-export async function getGuest(email: string): Promise<Guest[]> {
+export async function getGuest(email: string): Promise<Guest | null> {
   const { data, error } = await supabase
     .from("guests")
     .select("*")
@@ -109,7 +109,7 @@ export async function getGuest(email: string): Promise<Guest[]> {
   return data;
 }
 
-export async function getBooking(id: number): Promise<Booking[]> {
+export async function getBooking(id: number): Promise<Booking | null> {
   const { data, error } = await supabase
     .from("bookings")
     .select("*")
