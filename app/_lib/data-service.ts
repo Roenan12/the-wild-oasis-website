@@ -14,7 +14,11 @@ export type Cabin = {
 
 export type Guest = {
   id: number;
-  email: string;
+  fullName?: string;
+  email?: string;
+  //   // nationalId: number;
+  //   // nationality: string;
+  //   // countryFlag: string;
 };
 
 export type Booking = {
@@ -25,8 +29,8 @@ export type Booking = {
   numNights: number;
   numGuests: number;
   totalPrice: number;
-  guestId: string;
-  cabinId: string;
+  guestId: number;
+  cabinId: number;
   cabins: {
     name: string;
     image: string;
@@ -40,7 +44,11 @@ export type Settings = {
   breakfastPrice: number;
 };
 
-type NewGuest = Omit<Guest, "id">;
+// type NewGuest = Omit<Guest, "id"> & {
+//   fullName: string | null | undefined;
+//   email: string | null | undefined;
+// };
+
 type NewBooking = Omit<Booking, "id">;
 
 export async function getCabin(id: number): Promise<Cabin | null> {
@@ -94,19 +102,50 @@ export const getCabins = async function (): Promise<Cabin[]> {
   return data || [];
 };
 
-export async function getGuest(email: string): Promise<Guest | null> {
-  const { data, error } = await supabase
-    .from("guests")
-    .select("*")
-    .eq("email", email)
-    .single();
+// export async function getGuest(
+//   email: string | null | undefined
+// ): Promise<Guest | null> {
+//   const { data, error } = await supabase
+//     .from("guests")
+//     .select("*")
+//     .eq("email", email)
+//     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Guest could not be loaded");
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Guest could not be loaded");
+//   }
+
+//   return data;
+// }
+
+export async function getGuest(
+  email: string | null | undefined
+): Promise<Guest | null> {
+  try {
+    console.log("Checking for guest with email:", email);
+    const { data, error } = await supabase
+      .from("guests")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    if (error && error.code === "PGRST116") {
+      // No guest found
+      console.warn("No guest found with email:", email);
+      return null;
+    }
+
+    if (error) {
+      console.error("Unexpected getGuest error:", error);
+      throw new Error("Error fetching guest");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("getGuest failed:", error);
+    throw error;
   }
-
-  return data;
 }
 
 export async function getBooking(id: number): Promise<Booking | null> {
@@ -200,15 +239,37 @@ export async function getCountries(): Promise<
   }
 }
 
-export async function createGuest(newGuest: NewGuest): Promise<Guest[]> {
-  const { data, error } = await supabase.from("guests").insert([newGuest]);
+// export async function createGuest(newGuest: NewGuest): Promise<Guest[]> {
+//   const { data, error } = await supabase.from("guests").insert([newGuest]);
 
-  if (error) {
-    console.error(error);
-    throw new Error("Guest could not be created");
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Guest could not be created");
+//   }
+
+//   return data || [];
+// }
+
+export async function createGuest(newGuest: {
+  email: string;
+  fullName: string;
+}) {
+  try {
+    console.log("Creating guest with data:", newGuest);
+
+    const { data, error } = await supabase.from("guests").insert([newGuest]);
+
+    if (error) {
+      console.error("createGuest error:", error);
+      throw new Error("Guest could not be created");
+    }
+
+    console.log("Guest created successfully:", data);
+    return data;
+  } catch (error) {
+    console.error("createGuest failed:", error);
+    throw error;
   }
-
-  return data || [];
 }
 
 export async function createBooking(newBooking: NewBooking): Promise<Booking> {
