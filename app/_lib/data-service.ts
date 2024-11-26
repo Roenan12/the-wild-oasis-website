@@ -16,9 +16,9 @@ export type Guest = {
   id: number;
   fullName?: string;
   email?: string;
-  //   // nationalId: number;
-  //   // nationality: string;
-  //   // countryFlag: string;
+  nationalID: string;
+  nationality: string;
+  countryFlag: string;
 };
 
 export type Booking = {
@@ -287,6 +287,7 @@ export async function createBooking(newBooking: NewBooking): Promise<Booking> {
   return data;
 }
 
+/*
 export async function updateGuest(
   id: string,
   updatedFields: Partial<Guest>
@@ -335,3 +336,4 @@ export async function deleteBooking(id: number): Promise<Booking[]> {
 
   return data || [];
 }
+*/
