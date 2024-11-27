@@ -21,6 +21,11 @@ export type Guest = {
   countryFlag: string;
 };
 
+type BookingCabinDetails = {
+  name: string;
+  image: string;
+};
+
 export type Booking = {
   id: number;
   created_at: string;
@@ -31,10 +36,7 @@ export type Booking = {
   totalPrice: number;
   guestId: number;
   cabinId: number;
-  cabins: {
-    name: string;
-    image: string;
-  }[];
+  cabins: BookingCabinDetails;
 };
 
 export type Settings = {
@@ -177,7 +179,14 @@ export async function getBookings(guestId: number): Promise<Booking[]> {
     throw new Error("Bookings could not get loaded");
   }
 
-  return data || [];
+  if (!data) return [];
+
+  const bookings: Booking[] = data.map((booking) => ({
+    ...booking,
+    cabins: Array.isArray(booking.cabins) ? booking.cabins[0] : booking.cabins,
+  }));
+
+  return bookings;
 }
 
 export async function getBookedDatesByCabinId(
