@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
+import { getBookings } from "./data-service";
 
 interface AuthOptions {
   redirectTo: string;
@@ -31,8 +32,7 @@ export async function updateGuest(formData: FormData): Promise<void> {
 
   const updateData = { nationality, countryFlag, nationalID };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("guests")
     .update(updateData)
     .eq("id", session.user.guestId);
@@ -40,6 +40,28 @@ export async function updateGuest(formData: FormData): Promise<void> {
   if (error) throw new Error("Guest could not be updated");
 
   revalidatePath("/account/profile");
+}
+
+export async function deleteReservation(bookingId: number): Promise<void> {
+  const session = await auth();
+  if (!session) throw new Error("You must be logged in");
+
+  const guestBookings = await getBookings(session.user.guestId);
+  const guestBookingsIds = guestBookings.map((booking) => booking.id);
+
+  if (!guestBookingsIds.includes(bookingId))
+    throw new Error("You are not allowed to delete this booking");
+
+  const { error } = await supabase
+    .from("bookings")
+    .delete()
+    .eq("id", bookingId);
+
+  if (error) {
+    throw new Error("Booking could not be deleted");
+  }
+
+  revalidatePath("/account/reservations");
 }
 
 export async function signInAction(): Promise<void> {
