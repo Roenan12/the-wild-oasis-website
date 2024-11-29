@@ -82,6 +82,9 @@ export async function updateGuest(formData: FormData): Promise<void> {
 }
 
 export async function deleteReservation(bookingId: number): Promise<void> {
+  //for testing, delay for 2secs
+  await new Promise((res) => setTimeout(res, 2000));
+
   const session = await auth();
   if (!session) throw new Error("You must be logged in");
 
