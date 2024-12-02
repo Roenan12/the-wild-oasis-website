@@ -80,6 +80,7 @@ npm run dev
 - **Database & Hosting**: [Supabase](https://supabase.com/)
 - **Authentication**: [NextAuth/Auth.js](https://authjs.dev/)
 - **Other libraries**:
+  - [date-fns](https://date-fns.org/)
   - [React Day Picker](https://react-day-picker.js.org/)
   - [React Hero Icons](https://heroicons.com/)
 
