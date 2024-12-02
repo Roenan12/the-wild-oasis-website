@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Wild Oasis Website
 
-## Getting Started
+**The Wild Oasis Website** is a modern booking platform for cabins and hotels, featuring a seamless user experience for managing reservations. Built with Next.js and TypeScript.
 
-First, run the development server:
+---
+
+## Features
+
+- **CRUD Operations**: Create, read, update, and delete reservations.
+- **Authentication & Authorization**: Secure login with Google OAuth powered by NextAuth (Auth.js).
+- **Guest Profile Management**: Update and manage guest profile.
+- **Advanced Filtering**: filter cabins by max capacity of guests.
+- **Data-Driven UI**: Dynamic updates with server-side rendering, caching, and revalidation.
+
+---
+
+## Key Concepts Learned
+
+This project serves as an in-depth exploration of **Next.js** fundamentals and advanced features, including:
+
+- **Project Structure**: Organizing files and folders for scalability and maintainability.
+- **Routing**: Using file-based routing and dynamic route handlers.
+- **Rendering Methods**: Static Site Generation (SSG), Server-Side Rendering (SSR), and Incremental Static Regeneration (ISR).
+- **Data Fetching**: Utilizing `getServerSideProps`, `getStaticProps`, and API routes.
+- **Caching & Revalidation**: Efficiently managing and invalidating cached data.
+- **Error Handling**: Building resilient applications with robust error boundaries.
+- **NextAuth**: Implementing secure authentication workflows.
+- **Server Actions**: Handling logic directly on the server using `useFormStatus` and `useTransitionHook`.
+
+---
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/the-wild-oasis-website.git
+   ```
+2. Navigate to the project directory:
+
+```bash
+  cd the-wild-oasis-website
+```
+
+3. Install dependencies:
+
+```bash
+    npm install
+```
+
+4. Configure environment variables:
+
+```bash
+    cp .env.example .env.local
+```
+
+- Add the required environment variables.
+
+5. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open your browser and visit `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Sign in using your Google account to access the app.
+- Browse and filter available cabins to find your ideal stay.
+- Create a reservation, update details, or cancel bookings as needed.
+- Manage your guest profile to keep your information up-to-date.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Database & Hosting**: [Supabase](https://supabase.com/)
+- **Authentication**: [NextAuth/Auth.js](https://authjs.dev/)
+- **Other libraries**:
+  - [React Day Picker](https://react-day-picker.js.org/)
+  - [React Hero Icons](https://heroicons.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Acknowledgements
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This app was developed as part of the [Udemy course](https://www.udemy.com/course/the-ultimate-react-course/) by Jonas Schmedtmann.  
+Special thanks to Jonas for his excellent teaching and guidance throughout the course.
