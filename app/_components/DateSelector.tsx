@@ -1,6 +1,11 @@
 "use client";
 
-import { isWithinInterval } from "date-fns";
+import {
+  differenceInDays,
+  isPast,
+  isSameDay,
+  isWithinInterval,
+} from "date-fns";
 import { DayPicker, DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { Settings, Cabin } from "@/app/_lib/data-service";
@@ -29,13 +34,20 @@ type DateSelectorProps = {
 function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
   const { range, setRange, resetRange } = useReservation();
 
-  const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
+  const { regularPrice, discount } = cabin;
+
+  const displayRange: DateRange | null = isAlreadyBooked(range, bookedDates)
+    ? null
+    : range;
+
+  const numNights =
+    displayRange && displayRange.from && displayRange.to
+      ? differenceInDays(displayRange.to, displayRange.from)
+      : 0;
+
+  const cabinPrice = numNights * (regularPrice - (discount ?? 0));
 
   // SETTINGS
-
   const { minBookingLength, maxBookingLength } = settings;
 
   const handleSelect = (selected: DateRange | undefined) => {
@@ -51,7 +63,7 @@ function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
         className="pt-12 place-self-center"
         mode="range"
         onSelect={handleSelect}
-        selected={range}
+        selected={displayRange || undefined}
         min={minBookingLength}
         max={maxBookingLength}
         fromMonth={new Date()}
@@ -59,14 +71,20 @@ function DateSelector({ settings, bookedDates, cabin }: DateSelectorProps) {
         toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
         numberOfMonths={2}
+        disabled={(curDate) =>
+          isPast(curDate) ||
+          bookedDates.some((date) => isSameDay(date, curDate))
+        }
       />
 
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
         <div className="flex items-baseline gap-6">
           <p className="flex gap-2 items-baseline">
-            {discount > 0 ? (
+            {(discount ?? 0) > 0 ? (
               <>
-                <span className="text-2xl">${regularPrice - discount}</span>
+                <span className="text-2xl">
+                  ${regularPrice - (discount ?? 0)}
+                </span>
                 <span className="line-through font-semibold text-primary-700">
                   ${regularPrice}
                 </span>
