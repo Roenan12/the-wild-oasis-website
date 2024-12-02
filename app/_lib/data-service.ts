@@ -56,7 +56,7 @@ export type Settings = {
 //   email: string | null | undefined;
 // };
 
-type NewBooking = Omit<Booking, "id">;
+// type NewBooking = Omit<Booking, "id">;
 
 export async function getCabin(id: number): Promise<Cabin | null> {
   const { data, error } = await supabase
@@ -286,6 +286,7 @@ export async function createGuest(newGuest: {
   }
 }
 
+/*
 export async function createBooking(newBooking: NewBooking): Promise<Booking> {
   const { data, error } = await supabase
     .from("bookings")
@@ -300,6 +301,7 @@ export async function createBooking(newBooking: NewBooking): Promise<Booking> {
 
   return data;
 }
+*/
 
 /*
 export async function updateGuest(
