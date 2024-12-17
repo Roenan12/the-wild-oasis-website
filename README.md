@@ -33,7 +33,7 @@ This project serves as an in-depth exploration of **Next.js** fundamentals and a
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/the-wild-oasis-website.git
+   git clone https://github.com/Roenan12/the-wild-oasis-website.git
    ```
 2. Navigate to the project directory:
 
